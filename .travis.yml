@@ -21,6 +21,7 @@ before_script:
 script:
   - ./gradlew test
   - ./gradlew assembleRelease
+  - ls $HOME/app/build/outputs/apk/release
 
 deploy:
   provider: releases
