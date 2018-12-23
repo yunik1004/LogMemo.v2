@@ -15,21 +15,17 @@ android:
     - android-27
     - android-19
 
-sudo: true
-
 before_script:
   - chmod +x ./gradlew
-  - sudo apt-get install tree
 
 script:
   - ./gradlew test
   - ./gradlew assembleRelease
-  - tree $HOME/app/build
 
 deploy:
   provider: releases
   api_key: $GITHUB_OAUTH_TOKEN
-  file: $HOME/app/build/outputs/apk/release/app-release.apk
+  file: $HOME/app/build/outputs/apk/release/app-release-unsigned.apk
   skip_cleanup: true
   on:
     tags: true
