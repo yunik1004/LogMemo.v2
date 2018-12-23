@@ -33,6 +33,7 @@ deploy:
   skip_cleanup: true
   on:
     tags: true
+    all_branches: true
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
