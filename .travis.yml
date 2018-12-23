@@ -15,9 +15,11 @@ android:
     - android-27
     - android-19
 
+sudo: true
+
 before_script:
   - chmod +x ./gradlew
-  - apt-get install tree
+  - sudo apt-get install tree
 
 script:
   - ./gradlew test
