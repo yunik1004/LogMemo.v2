@@ -19,7 +19,10 @@ before_script:
   - chmod +x ./gradlew
 
 script:
-  - ./gradlew build
+  - ./gradlew test
+
+before_deploy:
+  - ./gradlew assembleRelease
 
 deploy:
   provider: releases
