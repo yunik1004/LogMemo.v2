@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="memo_edit_text" type="id"></item>
+    <item name="memo_created_time" type="id"></item>
+    <item name="memo_created_text" type="id"></item>
 </resources>
