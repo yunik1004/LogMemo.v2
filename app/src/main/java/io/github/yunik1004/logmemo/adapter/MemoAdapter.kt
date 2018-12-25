@@ -104,6 +104,7 @@ class MemoAdapter(private var context: Context): RecyclerView.Adapter<MemoAdapte
         val builder = AlertDialog.Builder(context)
         val editText = EditText(context)
         editText.setText(memoList[currentPosition].text)
+        editText.setSelection(editText.text.length)
         builder.setTitle(R.string.memo_component_setting_modify)
         builder.setView(editText)
         builder.setPositiveButton(R.string.dialog_ok){_, _ ->
