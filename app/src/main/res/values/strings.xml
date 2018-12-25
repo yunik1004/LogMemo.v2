@@ -2,4 +2,7 @@
     <string name="app_name">LogMemo</string>
     <string name="memo_write_hint">Enter your memo</string>
     <string name="memo_save">Save</string>
+
+    <string name="setting_backup">Backup</string>
+    <string name="setting_reset">Reset</string>
 </resources>

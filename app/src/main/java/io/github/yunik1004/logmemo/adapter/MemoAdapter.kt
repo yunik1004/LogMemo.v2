@@ -70,6 +70,12 @@ class MemoAdapter(context: Context): RecyclerView.Adapter<MemoAdapter.MemoViewHo
         }
     }
 
+    fun reset() {
+        memoList.clear()
+        memoRepository.deleteAll()
+        notifyDataSetChanged()
+    }
+
     inner class MemoViewHolder(memoView: View): RecyclerView.ViewHolder(memoView) {
         var memoCreatedTime: TextView = memoView.findViewById(R.id.memo_created_time)
         var memoCreatedText: TextView = memoView.findViewById(R.id.memo_created_text)

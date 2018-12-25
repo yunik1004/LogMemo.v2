@@ -31,7 +31,6 @@ class MemoRepository(private val context: Context) {
         return memos
     }
 
-
     fun insert(text: String): Memo? {
         val current = Calendar.getInstance().time
         val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(current)
@@ -65,6 +64,12 @@ class MemoRepository(private val context: Context) {
             delete(MEMO_TABLE_NAME,
                 "id = {memoID}", "memoID" to id
             )
+        }
+    }
+
+    fun deleteAll() {
+        context.memoDatabase.use {
+            delete(MEMO_TABLE_NAME, null, null)
         }
     }
 }

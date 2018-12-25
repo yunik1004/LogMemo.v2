@@ -1,18 +1,21 @@
 package io.github.yunik1004.logmemo.activity
 
+import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.Gravity
+import android.view.MenuItem
 import android.widget.EditText
+import android.widget.PopupMenu
 import io.github.yunik1004.logmemo.R
 import io.github.yunik1004.logmemo.adapter.MemoAdapter
 import org.jetbrains.anko.*
 import org.jetbrains.anko.design.floatingActionButton
-import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.recyclerview.v7.themedRecyclerView
 import org.jetbrains.anko.sdk27.coroutines.onClick
 
@@ -29,6 +32,7 @@ class MainActivity : AppCompatActivity() {
 class MainActivityUi : AnkoComponent<MainActivity> {
     private lateinit var memoEditText: EditText
     private lateinit var memoRecyclerView: RecyclerView
+    private lateinit var settingPopupMenu: PopupMenu
 
     override fun createView(ui: AnkoContext<MainActivity>) = with(ui) {
         relativeLayout {
@@ -75,16 +79,18 @@ class MainActivityUi : AnkoComponent<MainActivity> {
             // Floating buttons
             verticalLayout {
                 // Setting button
-                floatingActionButton {
+                val settingFloatingActionButton = floatingActionButton {
                     imageResource = R.drawable.ic_more_vert_black_24dp
                     backgroundTintList = ColorStateList.valueOf(Color.TRANSPARENT)
                     compatElevation = 0.0f
+
                     onClick {
-                        toast("Settings").show()
+                        settingPopupMenu.show()
                     }
                 }.lparams {
                     gravity = Gravity.END
                 }
+                setSettingPopupMenu(context, settingFloatingActionButton)
 
                 // Color-change button
                 floatingActionButton {
@@ -107,5 +113,23 @@ class MainActivityUi : AnkoComponent<MainActivity> {
 
     private fun clearMemo() {
         memoEditText.setText("")
+    }
+
+    private fun setSettingPopupMenu(context: Context, settingFloatingActionButton: FloatingActionButton) {
+        settingPopupMenu = PopupMenu(context, settingFloatingActionButton)
+        settingPopupMenu.menu.add(1, R.id.setting_backup, 1, R.string.setting_backup)
+        settingPopupMenu.menu.add(1, R.id.setting_reset, 2, R.string.setting_reset)
+        settingPopupMenu.setOnMenuItemClickListener{item: MenuItem? ->
+            when (item!!.itemId) {
+                R.id.setting_backup -> {
+                    true
+                }
+                R.id.setting_reset -> {
+                    val adapter = memoRecyclerView.adapter as MemoAdapter
+                    adapter.reset()
+                }
+            }
+            true
+        }
     }
 }

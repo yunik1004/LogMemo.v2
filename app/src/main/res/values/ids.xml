@@ -3,4 +3,7 @@
     <item name="memo_edit_text" type="id"></item>
     <item name="memo_created_time" type="id"></item>
     <item name="memo_created_text" type="id"></item>
+
+    <item name="setting_backup" type="id"></item>
+    <item name="setting_reset" type="id"></item>
 </resources>
