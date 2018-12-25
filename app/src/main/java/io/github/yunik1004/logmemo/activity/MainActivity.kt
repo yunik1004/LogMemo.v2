@@ -1,4 +1,4 @@
-package io.github.yunik1004.logmemo
+package io.github.yunik1004.logmemo.activity
 
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -6,23 +6,18 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.TypedValue
 import android.view.Gravity
-import android.view.View
-import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.TextView
+import io.github.yunik1004.logmemo.R
+import io.github.yunik1004.logmemo.adapter.MemoAdapter
 import org.jetbrains.anko.*
 import org.jetbrains.anko.design.floatingActionButton
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.sdk27.coroutines.onClick
-import java.text.SimpleDateFormat
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mainUI: MainActivityUi
-
-    val data = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -107,69 +102,5 @@ class MainActivityUi : AnkoComponent<MainActivity> {
 
     private fun clearMemo() {
         memoEditText.setText("")
-    }
-}
-
-data class Memo(var time: String, var text: String)
-
-class MemoUI: AnkoComponent<ViewGroup> {
-    override fun createView(ui: AnkoContext<ViewGroup>): View = with(ui) {
-        linearLayout {
-            lparams(width = matchParent, height = wrapContent)
-            verticalPadding = dip(8)
-
-            isClickable = true
-            isFocusable = true
-            val outValue = TypedValue()
-            context.theme.resolveAttribute(android.R.attr.selectableItemBackground, outValue, true)
-            backgroundResource = outValue.resourceId
-
-            onClick {
-                toast("Memo click").show()
-            }
-
-            textView {
-                id = R.id.memo_created_time
-            }.lparams(width = wrapContent, height = wrapContent){
-                rightMargin = dip(8)
-            }
-
-            textView {
-                id = R.id.memo_created_text
-            }.lparams(width = wrapContent, height = wrapContent, weight = 1.0f){}
-        }
-    }
-}
-
-class MemoAdapter(private val memoList: ArrayList<Memo> = ArrayList()): RecyclerView.Adapter<MemoAdapter.MemoViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MemoViewHolder {
-        return MemoViewHolder(MemoUI().createView(AnkoContext.create(parent.context, parent)))
-    }
-
-    override fun onBindViewHolder(holder: MemoViewHolder, position: Int) {
-        val memo = memoList[position]
-        holder.memoCreatedTime.text = memo.time
-        holder.memoCreatedText.text = memo.text
-    }
-
-    override fun getItemCount(): Int {
-        return memoList.size
-    }
-
-    fun push(text: String) {
-        val textTrim = text.trim()
-        if (textTrim == "") {
-            return
-        }
-
-        val currentTime = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Calendar.getInstance().time)
-
-        memoList.add(0, Memo(currentTime, textTrim))
-        notifyItemInserted(0)
-    }
-
-    inner class MemoViewHolder(memoView: View): RecyclerView.ViewHolder(memoView) {
-        var memoCreatedTime: TextView = memoView.findViewById(R.id.memo_created_time)
-        var memoCreatedText: TextView = memoView.findViewById(R.id.memo_created_text)
     }
 }

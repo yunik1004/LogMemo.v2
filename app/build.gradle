@@ -20,11 +20,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main/java', 'src/main/java/db', 'src/main/java/io/github/yunik1004/logmemo/db', 'src/main/java/io/github/yunik1004/logmemo/activity', 'src/main/java/io/github/yunik1004/logmemo/adapter']
+        }
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation "org.jetbrains.anko:anko:$anko_version"
     // Appcompat-v7 (only Anko Commons)
