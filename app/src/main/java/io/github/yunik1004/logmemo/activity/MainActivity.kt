@@ -13,6 +13,7 @@ import io.github.yunik1004.logmemo.adapter.MemoAdapter
 import org.jetbrains.anko.*
 import org.jetbrains.anko.design.floatingActionButton
 import org.jetbrains.anko.recyclerview.v7.recyclerView
+import org.jetbrains.anko.recyclerview.v7.themedRecyclerView
 import org.jetbrains.anko.sdk27.coroutines.onClick
 
 class MainActivity : AppCompatActivity() {
@@ -36,12 +37,13 @@ class MainActivityUi : AnkoComponent<MainActivity> {
             // Layout
             verticalLayout {
                 // Memo logs
-                memoRecyclerView = recyclerView {
+                memoRecyclerView = themedRecyclerView(R.style.ScrollbarRecyclerView) {
                     val mLinearLayoutManager = LinearLayoutManager(context)
                     mLinearLayoutManager.reverseLayout = true
 
                     layoutManager = mLinearLayoutManager
                     adapter = MemoAdapter(context)
+                    scrollToPosition(0)
                 }.lparams(width = matchParent, height = wrapContent, weight = 1.0f){}
 
                 linearLayout {
