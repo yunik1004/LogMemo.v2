@@ -1,5 +1,6 @@
 package io.github.yunik1004.logmemo.activity
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -119,17 +120,30 @@ class MainActivityUi : AnkoComponent<MainActivity> {
         settingPopupMenu = PopupMenu(context, settingFloatingActionButton)
         settingPopupMenu.menu.add(1, R.id.setting_backup, 1, R.string.setting_backup)
         settingPopupMenu.menu.add(1, R.id.setting_reset, 2, R.string.setting_reset)
+        val memoResetDialog = setMemoResetDialog(context)
         settingPopupMenu.setOnMenuItemClickListener{item: MenuItem? ->
             when (item!!.itemId) {
                 R.id.setting_backup -> {
                     true
                 }
                 R.id.setting_reset -> {
-                    val adapter = memoRecyclerView.adapter as MemoAdapter
-                    adapter.reset()
+                    memoResetDialog.show()
                 }
             }
             true
         }
+    }
+
+    private fun setMemoResetDialog(context: Context): AlertDialog {
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle(R.string.setting_reset)
+        builder.setMessage(R.string.memo_reset_message)
+        builder.setPositiveButton(R.string.dialog_ok){_, _ ->
+            val adapter = memoRecyclerView.adapter as MemoAdapter
+            adapter.reset()
+        }
+        builder.setNegativeButton(R.string.dialog_cancel){_, _ -> }
+
+        return builder.create()
     }
 }

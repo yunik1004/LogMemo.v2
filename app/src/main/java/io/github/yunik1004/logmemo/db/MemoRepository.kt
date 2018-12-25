@@ -53,9 +53,11 @@ class MemoRepository(private val context: Context) {
         return Memo(id.toInt(), currentDate, currentTime, text)
     }
 
-    fun update() {
+    fun update(id: Int, text: String) {
         context.memoDatabase.use {
-            //
+            update(MEMO_TABLE_NAME, "text" to text)
+                .whereArgs("id = {memoID}", "memoID" to id)
+                .exec()
         }
     }
 

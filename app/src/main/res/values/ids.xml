@@ -6,4 +6,7 @@
 
     <item name="setting_backup" type="id"></item>
     <item name="setting_reset" type="id"></item>
+
+    <item name="memo_component_setting_modify" type="id"></item>
+    <item name="memo_component_setting_remove" type="id"></item>
 </resources>
