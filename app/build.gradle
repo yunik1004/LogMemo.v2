@@ -22,7 +22,7 @@ android {
     }
     sourceSets {
         main {
-            java.srcDirs = ['src/main/java', 'src/main/java/db', 'src/main/java/io/github/yunik1004/logmemo/db', 'src/main/java/io/github/yunik1004/logmemo/activity', 'src/main/java/io/github/yunik1004/logmemo/adapter']
+            java.srcDirs = ['src/main/java', 'src/main/java/db', 'src/main/java/io/github/yunik1004/logmemo/db', 'src/main/java/io/github/yunik1004/logmemo/activity', 'src/main/java/io/github/yunik1004/logmemo/adapter', 'src/main/java/io/github/yunik1004/logmemo/model']
         }
     }
 }

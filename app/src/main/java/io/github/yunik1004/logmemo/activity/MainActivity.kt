@@ -14,7 +14,6 @@ import org.jetbrains.anko.*
 import org.jetbrains.anko.design.floatingActionButton
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.sdk27.coroutines.onClick
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mainUI: MainActivityUi
@@ -42,7 +41,7 @@ class MainActivityUi : AnkoComponent<MainActivity> {
                     mLinearLayoutManager.reverseLayout = true
 
                     layoutManager = mLinearLayoutManager
-                    adapter = MemoAdapter()
+                    adapter = MemoAdapter(context)
                 }.lparams(width = matchParent, height = wrapContent, weight = 1.0f){}
 
                 linearLayout {
@@ -57,8 +56,12 @@ class MainActivityUi : AnkoComponent<MainActivity> {
                     button(R.string.memo_save) {
                         onClick {
                             val adapter = memoRecyclerView.adapter as MemoAdapter
-                            adapter.push(getMemo())
-                            memoRecyclerView.scrollToPosition(0)
+                            val text = getMemo()
+                            if (text != "") {
+                                adapter.push(text)
+                                memoRecyclerView.scrollToPosition(0)
+                            }
+
                             clearMemo()
                         }
                     }.lparams(width = wrapContent, height = wrapContent){
@@ -97,7 +100,7 @@ class MainActivityUi : AnkoComponent<MainActivity> {
     }
 
     private fun getMemo(): String {
-        return memoEditText.text.toString()
+        return memoEditText.text.toString().trim()
     }
 
     private fun clearMemo() {

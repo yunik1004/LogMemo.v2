@@ -6,8 +6,7 @@ import io.github.yunik1004.logmemo.MEMO_DB_NAME
 import io.github.yunik1004.logmemo.MEMO_TABLE_NAME
 import org.jetbrains.anko.db.*
 
-class MemoDatabaseOpenHelper(ctx: Context): ManagedSQLiteOpenHelper(ctx,
-    MEMO_DB_NAME, null, 1) {
+class MemoDatabaseOpenHelper(ctx: Context): ManagedSQLiteOpenHelper(ctx, MEMO_DB_NAME, null, 1) {
     companion object {
         private var instance: MemoDatabaseOpenHelper? = null
 
@@ -23,7 +22,7 @@ class MemoDatabaseOpenHelper(ctx: Context): ManagedSQLiteOpenHelper(ctx,
     override fun onCreate(db: SQLiteDatabase) {
         db.createTable(
             MEMO_TABLE_NAME, true,
-            "id" to INTEGER + PRIMARY_KEY + UNIQUE + AUTOINCREMENT,
+            "id" to INTEGER + PRIMARY_KEY + UNIQUE,
             "date" to TEXT,
             "time" to TEXT,
             "text" to TEXT
@@ -34,3 +33,6 @@ class MemoDatabaseOpenHelper(ctx: Context): ManagedSQLiteOpenHelper(ctx,
         db.dropTable(MEMO_TABLE_NAME, true)
     }
 }
+
+val Context.memoDatabase: MemoDatabaseOpenHelper
+    get() = MemoDatabaseOpenHelper.getInstance(applicationContext)
