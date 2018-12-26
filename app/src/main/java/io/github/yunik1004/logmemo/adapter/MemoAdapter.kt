@@ -7,6 +7,7 @@ import android.util.TypedValue
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.EditText
 import android.widget.PopupMenu
 import android.widget.TextView
@@ -107,16 +108,24 @@ class MemoAdapter(private var context: Context): RecyclerView.Adapter<MemoAdapte
         editText.setSelection(editText.text.length)
         builder.setTitle(R.string.memo_component_setting_modify)
         builder.setView(editText)
-        builder.setPositiveButton(R.string.dialog_ok){_, _ ->
-            val newMemo = editText.text.toString()
-            memoRepository.update(memoId, newMemo)
-            memoList[currentPosition].text = newMemo
-            notifyItemChanged(currentPosition)
-        }
+        builder.setPositiveButton(R.string.dialog_ok, null)
         builder.setNegativeButton(R.string.dialog_cancel){_, _ -> }
 
-        builder.create()
-        builder.show()
+        val dialog = builder.create()
+        dialog.window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
+        dialog.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+
+        dialog.show()
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).onClick {
+            val newMemo = editText.text.toString().trim()
+            if (newMemo.isNotEmpty()) {
+                memoRepository.update(memoId, newMemo)
+                memoList[currentPosition].text = newMemo
+                notifyItemChanged(currentPosition)
+                dialog.dismiss()
+            }
+        }
+        editText.requestFocus()
     }
 
     inner class MemoViewHolder(memoView: View): RecyclerView.ViewHolder(memoView) {

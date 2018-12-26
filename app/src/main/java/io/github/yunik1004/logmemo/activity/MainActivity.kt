@@ -64,7 +64,7 @@ class MainActivityUi : AnkoComponent<MainActivity> {
                         onClick {
                             val adapter = memoRecyclerView.adapter as MemoAdapter
                             val text = getMemo()
-                            if (text != "") {
+                            if (text.isNotEmpty()) {
                                 adapter.push(text)
                                 memoRecyclerView.scrollToPosition(0)
                             }
